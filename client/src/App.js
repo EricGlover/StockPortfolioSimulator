@@ -1,58 +1,163 @@
 import React, { Component } from "react";
-import DateSlider from "./Components/Elements/slider";
-import moment from "moment";
-import logo from "./logo.svg";
-import "./App.css";
-import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
-import StockContainer from "./Containers/StockContainer";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect
+} from "react-router-dom";
+//REACT-REDUX
+import { Provider } from "react-redux";
+import store from "./Store/store";
 
-// const centerChildren = {
-//   display: 'flex',
-//   flexDirection: 'row'
-// }
+import DateSlider from "./Components/Elements/slider";
+import StockContainer from "./Containers/StockContainer";
+import TradeContainer from "./Containers/TradeContainer";
+import TransactionsContainer from "./Containers/TransactionsContainer";
+
+import moment from "moment";
+import logo from "./public/logo.png";
+import "./public/stylesheets/App.css";
+import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 
 class App extends Component {
-  //TODO: revisit lifting up the date later
   constructor() {
     super();
+    this.defaults = {
+      startingDate: moment(`2016-01-01`)
+    };
     this.state = {
-      prices: undefined,
-      currentDate: moment("2016-01-01")
+      loaded: false,
+      stockData: undefined,
+      currentDate: moment("2016-01-01"),
+      currentStock: undefined,
+      user: {
+        cash: 1000
+      },
+      redirect: false,
+      redirectTo: undefined
     };
   }
-  onDateChange = newDate => {
-    this.setState({ currentDate: moment(newDate) });
-  };
+
   componentDidMount = async () => {
     let h = new Headers();
     let serverResponse = await fetch("/api/prices", {
       headers: h,
       method: "GET"
     });
-    // console.log(serverResponse);
-    const prices = await serverResponse.json();
-    // console.log(prices);
-    this.setState({ prices });
+    const stockData = await serverResponse.json();
+    const firstDaysPrices = stockData[Object.keys(stockData)[0]];
+    const currentStock = Object.keys(firstDaysPrices)[0];
+    this.setState({ stockData, currentStock, loaded: true });
   };
+  pricePicker = () => {
+    const { stockData, currentDate, currentStock } = this.state;
+    // console.log(stockData, currentDate, currentStock);
+    return stockData[currentDate.valueOf()][currentStock].close;
+  };
+  handleDateChange = newDate => {
+    this.setState({ currentDate: moment(newDate) });
+  };
+  handleSelectStock = e => {
+    //get the button
+    //also I have to query the DOM here, worth?? at least I don't have to curry...
+    //.closest isn't supported in IE so....sorry IE
+    let btn = e.target.closest("button");
+    this.setState((prevState, props) => {
+      return { currentStock: btn.getAttribute("data-stock-ticker") };
+    });
+  };
+  handleRedirect = (e, key, payload) => {
+    console.log("handling redirect");
+    console.log(payload);
+    this.setState({ redirect: true, redirectTo: payload });
+  };
+
   render() {
-    let currentDaysStocks = this.state.prices
-      ? this.state.prices[this.state.currentDate.valueOf()]
+    if (this.state.redirect) {
+      this.setState({ redirect: false, redirectTo: undefined });
+      return (
+        <Router>
+          <Redirect push={true} to={`/${this.state.redirectTo}`} />
+        </Router>
+      );
+    }
+    let currentDaysStocks = this.state.stockData
+      ? this.state.stockData[this.state.currentDate.valueOf()]
       : null;
     return (
-      <MuiThemeProvider>
-        <div className="App">
-          <header className="App-header">
-            <img src={logo} className="App-logo" alt="logo" />
-            <h1 className="App-title">Stock Portfolio Simulator</h1>
-          </header>
-          <p className="App-intro">IT'S THE BEES KNEES!</p>
-          <StockContainer stocks={currentDaysStocks} />
-          <DateSlider
-            date={this.state.currentDate}
-            onDateChange={this.onDateChange}
-          />
-        </div>
-      </MuiThemeProvider>
+      <Provider store={store}>
+        <MuiThemeProvider>
+          <Router>
+            <div className="App">
+              <nav className="navbar">
+                <img src={logo} className="App-logo" alt="logo" />
+                <h1 className="nav-title">Stock Portofolio Simulator</h1>
+              </nav>
+              <main className="content-container">
+                <StockContainer
+                  stocks={currentDaysStocks}
+                  onTrade={this.handleSelectStock}
+                />
+                <div className="main-view-container">
+                  <DateSlider
+                    date={this.state.currentDate}
+                    startingDate={this.defaults.startingDate}
+                    onDateChange={this.handleDateChange}
+                  />
+                  <Switch>
+                    <Route
+                      path="/trade"
+                      render={() => {
+                        return this.state.loaded ? (
+                          <TradeContainer
+                            onRedirect={this.handleRedirect}
+                            currentDate={this.state.currentDate}
+                            price={this.pricePicker()}
+                            onChangeQuantity={this.handleQuantityChange}
+                            currentStock={this.state.currentStock}
+                          />
+                        ) : null;
+                      }}
+                    />
+                    <Route
+                      path="/transactions"
+                      render={() => {
+                        return this.state.loaded ? (
+                          <TransactionsContainer
+                            onRedirect={this.handleRedirect}
+                          />
+                        ) : null;
+                      }}
+                    />
+                    <Route
+                      path="/portfolio"
+                      render={() => {
+                        return this.state.loaded ? (
+                          <h1>Portfolio screen</h1>
+                        ) : null;
+                      }}
+                    />
+                    <Route
+                      path="/"
+                      render={() => {
+                        return this.state.loaded ? (
+                          <TradeContainer
+                            onRedirect={this.handleRedirect}
+                            currentDate={this.state.currentDate}
+                            price={this.pricePicker()}
+                            onChangeQuantity={this.handleQuantityChange}
+                            currentStock={this.state.currentStock}
+                          />
+                        ) : null;
+                      }}
+                    />
+                  </Switch>
+                </div>
+              </main>
+            </div>
+          </Router>
+        </MuiThemeProvider>
+      </Provider>
     );
   }
 }

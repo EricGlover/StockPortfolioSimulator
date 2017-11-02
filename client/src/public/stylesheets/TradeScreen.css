@@ -1,0 +1,20 @@
+.trade-screen-title {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-content: center;
+}
+.trade-screen-title > * {
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+.trade-screen-content {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  text-align: left;
+}
+.trade-screen-content-section {
+  margin-left: 2rem;
+  margin-right: 2rem;
+}

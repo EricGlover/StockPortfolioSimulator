@@ -9,8 +9,8 @@ class DateSlider extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      startingDate: `2016-01-01`,
-      date: moment(`2016-01-01`)
+      startingDate: this.props.startingDate,
+      date: moment(this.props.startingDate)
     };
     // performance test
     // let counter = 0;
@@ -25,10 +25,6 @@ class DateSlider extends Component {
     //   });
     // };
   }
-  // convertToDate = int => {
-  //   let newDate = moment(this.state.startingDate).add(int, "days");
-  //   this.props.onDateChange(newDate);
-  // };
   onChange = (e, value) => {
     let newDate = moment(this.state.startingDate).add(value, "days");
     this.props.onDateChange(newDate);
@@ -51,43 +47,3 @@ class DateSlider extends Component {
 }
 
 export default DateSlider;
-
-/* Debounce an utter garbage example */
-// class Table extends React.Component {
-//   constructor(props) {
-//     super(props);
-//     this.state = { searchTerm: props.searchTerm };
-//   }
-//
-//   setSearchTerm = debounce(e => {
-//     this.setState({ searchTerm: e.target.value });
-//   }, 1000);
-//
-//   render() {
-//     return (
-//       <div className="widget">
-//         <p>{this.state.searchTerm}</p>
-//         <input onChange={this.setSearchTerm} />
-//       </div>
-//     );
-//   }
-// }
-//
-// React.render(
-//   <Table searchTerm="Initial search term" />,
-//   document.getElementById("container")
-// );
-//
-// function debounce(a, b, c) {
-//   var d, e;
-//   return function() {
-//     function h() {
-//       (d = null), c || (e = a.apply(f, g));
-//     }
-//     var f = this,
-//       g = arguments;
-//     return (
-//       clearTimeout(d), (d = setTimeout(h, b)), c && !d && (e = a.apply(f, g)), e
-//     );
-//   };
-// }
