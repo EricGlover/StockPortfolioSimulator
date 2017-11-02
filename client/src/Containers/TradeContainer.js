@@ -25,6 +25,8 @@ class TradeContainer extends React.Component {
       if (this.props.user.cash > cost) return true;
     } else {
       const ticker = this.props.currentStock;
+      //if the stock isn't in the portfolio you can't sell it
+      if (!this.props.portfolio[ticker]) return false;
       const availableStocks = this.props.portfolio[ticker].quantity;
       if (quantity <= availableStocks) return true;
     }

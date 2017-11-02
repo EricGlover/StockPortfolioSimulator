@@ -13,6 +13,7 @@ import DateSlider from "./Components/Elements/slider";
 import StockContainer from "./Containers/StockContainer";
 import TradeContainer from "./Containers/TradeContainer";
 import TransactionsContainer from "./Containers/TransactionsContainer";
+import PortfolioContainer from "./Containers/PortfolioContainer";
 
 import moment from "moment";
 import logo from "./public/logo.png";
@@ -133,7 +134,9 @@ class App extends Component {
                       path="/portfolio"
                       render={() => {
                         return this.state.loaded ? (
-                          <h1>Portfolio screen</h1>
+                          <PortfolioContainer
+                            onRedirect={this.handleRedirect}
+                          />
                         ) : null;
                       }}
                     />
