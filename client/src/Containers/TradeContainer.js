@@ -1,15 +1,22 @@
 import React from "react";
 import { connect } from "react-redux";
 import { buyStock, sellStock } from "../Actions/index";
+
 import TradeScreen from "../Components/TradeScreen";
+
+import Snackbar from "material-ui/Snackbar";
 
 class TradeContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       buy: true,
-      quantity: 100,
-      cost: 100 * props.price
+      quantity: 1,
+      cost: 1 * props.price,
+      notification: {
+        message: undefined,
+        open: false
+      }
     };
   }
   isValidTrade = () => {
@@ -59,19 +66,44 @@ class TradeContainer extends React.Component {
         currentStock
       );
     }
+    this.setState({
+      notification: {
+        message: `You ${this.state.buy ? "bought" : "sold"} ${this.state
+          .quantity} ${this.state.quantity > 1 ? "shares" : "share"} of ${this
+          .props.currentStock}`,
+        open: true
+      }
+    });
+  };
+  handleNotificationRequestClose = () => {
+    this.setState({
+      notification: {
+        open: false
+      }
+    });
   };
   render() {
     return (
-      <TradeScreen
-        {...this.props}
-        onKeyUp={this.handleKeyUp}
-        onChangeQuantity={this.handleQuantityChange}
-        onTogglePurchase={this.handleTogglePurchase}
-        onPurchase={this.handleTransaction}
-        onSale={this.handleTransaction}
-        valid={this.isValidTrade()}
-        {...this.state}
-      />
+      <div>
+        <TradeScreen
+          {...this.props}
+          onKeyUp={this.handleKeyUp}
+          onChangeQuantity={this.handleQuantityChange}
+          onTogglePurchase={this.handleTogglePurchase}
+          onPurchase={this.handleTransaction}
+          onSale={this.handleTransaction}
+          valid={this.isValidTrade()}
+          buy={this.state.buy}
+          quantity={this.state.quantity}
+          cost={this.state.cost}
+        />
+        <Snackbar
+          open={this.state.notification.open}
+          message={this.state.notification.message}
+          autoHideDuration={4000}
+          onRequestClose={this.handleNotificationRequestClose}
+        />
+      </div>
     );
   }
 }

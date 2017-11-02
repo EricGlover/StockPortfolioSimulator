@@ -5,11 +5,13 @@ export const portfolio = (state = {}, action) => {
     case ACQUIRE_STOCK:
     case RELEASE_STOCK:
       const { ticker, quantity, cost } = action.data;
+      const prevQuantity = state[ticker] ? state[ticker].quantity : 0;
+      const prevCostBasis = state[ticker] ? state[ticker].costBasis : 0;
       return {
         ...state,
         [ticker]: {
-          quantity: state[ticker].quantity + quantity,
-          costBasis: state[ticker].costBasis + cost
+          quantity: prevQuantity + quantity,
+          costBasis: prevCostBasis + cost
         }
       };
     default:

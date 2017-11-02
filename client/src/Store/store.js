@@ -14,7 +14,6 @@ const intialState = {
       date: moment(`2016-01-01`),
       type: "BUY",
       price: 109.96,
-
       quantity: 5,
       cost: 109.96 * 5
     },
