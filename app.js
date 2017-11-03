@@ -24,13 +24,13 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 //heroku build path
-app.use(express.static(path.join(__dirname, "../client/build/static")));
+app.use(express.static(path.join(__dirname, "./client/build/static")));
 
 app.use("/", index);
 // app.use("/users", users);
 app.use("/api", apiRouter);
 app.get("/*", (req, res) => {
-  res.end("../client/build/index.html");
+  res.end("./client/build/index.html");
 });
 
 // catch 404 and forward to error handler
