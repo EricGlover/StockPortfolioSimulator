@@ -27,7 +27,7 @@ app.use(cookieParser());
 
 // app.use("/users", users);
 app.use("/api", apiRouter);
-app.use("/", index);
+// app.use("/", index);
 // app.use("*", index);
 app.use(express.static(path.join(__dirname, "./client/build/static")));
 
