@@ -21,7 +21,7 @@ class TradeContainer extends React.Component {
   }
   isValidTrade = () => {
     const { buy, quantity, cost } = this.state;
-    if (this.state.buy) {
+    if (buy) {
       if (this.props.user.cash > cost) return true;
     } else {
       const ticker = this.props.currentStock;

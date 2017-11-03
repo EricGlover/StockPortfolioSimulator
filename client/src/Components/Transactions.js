@@ -5,7 +5,6 @@ import PropTypes from "prop-types";
 import SelectField from "material-ui/SelectField";
 import MenuItem from "material-ui/MenuItem";
 import TextField from "material-ui/TextField";
-import FlatButton from "material-ui/FlatButton";
 import {
   Table,
   TableHeader,
@@ -14,6 +13,7 @@ import {
   TableRowColumn,
   TableBody
 } from "material-ui/Table";
+import SortButton from "./Elements/SortButton";
 
 //styles
 import "../public/stylesheets/Transactions.css";
@@ -47,22 +47,20 @@ const Transactions = props => {
         <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
           <TableRow>
             {columns.map(title => {
-              let icon;
-              if (props.sortBy === title) {
-                if (props.sortAscending) {
-                  icon = <i className="fa fa-caret-up" />;
-                } else {
-                  icon = <i className="fa fa-caret-down" />;
-                }
-              }
               return (
-                <TableHeaderColumn key={title}>
-                  <FlatButton
+                <TableHeaderColumn
+                  style={{ paddingLeft: "0px", paddingRight: "0px" }}
+                  key={title}
+                >
+                  <SortButton
                     label={title}
+                    ascending={props.sortAscending}
+                    icon={props.sortBy === title ? true : false}
+                    style={{ fontSize: "12px" }}
+                    labelStyle={{ fontSize: "12px" }}
                     onClick={e => {
                       props.onSortSelection(e, title);
                     }}
-                    icon={icon}
                   />
                 </TableHeaderColumn>
               );

@@ -1,6 +1,5 @@
 import React from "react";
 import { Stock } from "../Components/Stock";
-import moment from "moment";
 
 class StockContainer extends React.Component {
   constructor(props) {
@@ -55,6 +54,7 @@ class StockContainer extends React.Component {
     this.setState({ filter: trimmed });
   };
   handleSortSelection = (e, column) => {
+    console.log("clicking");
     column = column === "Price" ? "close" : column;
     if (this.state.sortBy === column) {
       //change the sort

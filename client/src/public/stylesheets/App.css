@@ -49,14 +49,21 @@
   flex-grow: 3;
   max-width: 60%;
 }
+.main-view-container {
+  display: flex;
+  flex-direction: column;
+}
 .main-view-container > * {
   margin: 1rem;
 }
+/* I thought this fixed my button icon problems
+it appears to have done the opposite
 i {
   width: 1rem;
   height: 1rem;
   margin: 0.3rem 0.3rem;
 }
+*/
 .stock-price-icon {
   width: auto;
   height: auto;

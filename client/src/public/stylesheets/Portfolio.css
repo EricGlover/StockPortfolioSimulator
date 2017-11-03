@@ -1,4 +1,20 @@
+.portfolio-wrapper {
+  flex-grow: 10;
+  display: flex;
+  flex-direction: column;
+  align-content: stretch;
+  justify-content: flex-end;
+  color: "blue";
+  background-color: "red";
+}
+.portfolio-wrapper > * {
+  flex-grow: 1;
+}
+.no-grow {
+  flex-grow: 0;
+}
 .portfolio-screen-title {
+  flex-grow: 0;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -8,13 +24,11 @@
   margin-left: 1rem;
   margin-right: 1rem;
 }
-.portfolio-screen-content {
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: space-between;
-  text-align: left;
+
+.portfolio-stats-table {
+  margin: 2rem 0;
 }
-.portfolio-screen-content-section {
-  margin-left: 2rem;
-  margin-right: 2rem;
+.portfolio-main-table {
+  margin: 2rem 0;
+  flex-grow: 10;
 }

@@ -1,6 +1,5 @@
 import React from "react";
 import TextField from "material-ui/TextField";
-import FlatButton from "material-ui/FlatButton";
 import RaisedButton from "material-ui/RaisedButton";
 import {
   Table,
@@ -11,17 +10,9 @@ import {
   TableBody
 } from "material-ui/Table";
 import { StockChange } from "./StockChange";
+import SortButton from "./Elements/SortButton";
 //styles
 import "../public/stylesheets/stock.css";
-
-const style = {
-  display: "flex",
-  flexDirection: "row"
-};
-const sortButtonStyle = {
-  width: "100%",
-  height: "100%"
-};
 
 //this awkward UI helper is needed because
 //one column is named price but the data key is name 'close'
@@ -37,13 +28,13 @@ let checkIcon = (title, sortBy) => {
 
 export const Stock = ({ stocks, ...props }) => {
   let stocksDisplay;
-
+  console.log("stock props");
+  console.log(props);
+  /*STOCK DISPLAY IS THE TABLE BODY */
   if (stocks) {
-    //changing stock data to [ {'ticker', '1d'.... } ]
-    //the table body data
     stocksDisplay = stocks.map(stock => {
       return (
-        <TableRow key={stock.ticker} style={{ textAlign: "center" }}>
+        <TableRow key={stock.ticker} style={{ fontSize: "10px" }}>
           <TableRowColumn>{stock.ticker}</TableRowColumn>
           <TableRowColumn>{stock.close}</TableRowColumn>
           <TableRowColumn>
@@ -69,14 +60,8 @@ export const Stock = ({ stocks, ...props }) => {
   } else {
     stocksDisplay = <div>Loading</div>;
   }
-  // const sortIcon = <i className={`fa fa-arrow-${props.sortByAscending ? 'up' : 'down'}`}
-  let sortIcon;
-  if (props.sortAscending) {
-    sortIcon = <i className="fa fa-arrow-up" />;
-  } else {
-    sortIcon = <i className="fa fa-arrow-down" />;
-  }
 
+  /* RENDER THE TABLE */
   return (
     <div className="stockTable">
       <Table selectable={false}>
@@ -97,15 +82,16 @@ export const Stock = ({ stocks, ...props }) => {
           <TableRow>
             {props.columns.map(title => {
               return (
-                <TableHeaderColumn key={title}>
-                  <FlatButton
+                <TableHeaderColumn
+                  style={{ paddingLeft: "0px", paddingRight: "0px" }}
+                  key={title}
+                >
+                  <SortButton
                     label={title}
-                    labelStyle={{ fontSize: "10px" }}
-                    style={sortButtonStyle}
-                    onClick={e => {
-                      props.onSortSelection(e, title);
-                    }}
-                    icon={checkIcon(title, props.sortBy) ? sortIcon : null}
+                    labelStyle={{ fontSize: "12px" }}
+                    ascending={props.sortAscending}
+                    icon={checkIcon(title, props.sortBy)}
+                    onClick={e => props.onSortSelection(e, title)}
                   />
                 </TableHeaderColumn>
               );

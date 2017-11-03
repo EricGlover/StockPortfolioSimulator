@@ -102,16 +102,19 @@ class App extends Component {
                 <h1 className="nav-title">Stock Portofolio Simulator</h1>
               </nav>
               <main className="content-container">
+                {/********* LEFT PANEL  *********  */}
                 <StockContainer
                   stocks={currentDaysStocks}
                   onTrade={this.handleSelectStock}
                 />
+                {/********* RIGHT PANEL *********  */}
                 <div className="main-view-container">
                   <DateSlider
                     date={this.state.currentDate}
                     startingDate={this.defaults.startingDate}
                     onDateChange={this.handleDateChange}
                   />
+                  {/*********ROUTING*********  */}
                   <Switch>
                     <Route
                       path="/trade"
