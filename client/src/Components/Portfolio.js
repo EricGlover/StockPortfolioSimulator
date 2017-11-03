@@ -14,6 +14,8 @@ import {
   TableRowColumn,
   TableBody
 } from "material-ui/Table";
+
+//
 import SortButton from "./Elements/SortButton";
 import { decimalFloor } from "../util/math";
 import "../public/stylesheets/Portfolio.css";
@@ -114,14 +116,18 @@ const Portfolio = props => {
                   <TableRowColumn>{stock.quantity}</TableRowColumn>
                   <TableRowColumn>
                     {stock.costBasis >= 0 ? `+` : `-`}
-                    {stock.costBasis}
+                    {decimalFloor(stock.costBasis)}
                   </TableRowColumn>
-                  <TableRowColumn>{stock.currentValue}</TableRowColumn>
-                  <TableRowColumn>{stock.profit}</TableRowColumn>
-                  <TableRowColumn>{`$${stock.currentPrice}`}</TableRowColumn>
-                  <TableRowColumn>{stock["1d"]}</TableRowColumn>
-                  <TableRowColumn>{stock["7d"]}</TableRowColumn>
-                  <TableRowColumn>{stock["30d"]}</TableRowColumn>
+                  <TableRowColumn>
+                    {decimalFloor(stock.currentValue)}
+                  </TableRowColumn>
+                  <TableRowColumn>{decimalFloor(stock.profit)}</TableRowColumn>
+                  <TableRowColumn>{`$${decimalFloor(
+                    stock.currentPrice
+                  )}`}</TableRowColumn>
+                  <TableRowColumn>{decimalFloor(stock["1d"])}</TableRowColumn>
+                  <TableRowColumn>{decimalFloor(stock["7d"])}</TableRowColumn>
+                  <TableRowColumn>{decimalFloor(stock["30d"])}</TableRowColumn>
                   <TableRowColumn
                     style={{ paddingLeft: "0px", paddingRight: "0px" }}
                   >

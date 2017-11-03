@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import { buyStock, sellStock } from "../Actions/index";
 
 import TradeScreen from "../Components/TradeScreen";
-
 import Snackbar from "material-ui/Snackbar";
 
 class TradeContainer extends React.Component {

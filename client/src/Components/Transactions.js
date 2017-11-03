@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 
 //material-ui
 import SelectField from "material-ui/SelectField";
+import Paper from "material-ui/Paper";
 import MenuItem from "material-ui/MenuItem";
 import TextField from "material-ui/TextField";
 import {
@@ -28,21 +29,21 @@ const Transactions = props => {
     transactions
   } = props;
   return (
-    <div>
-      <div className="transactions-screen-title">
+    <Paper>
+      <Paper className="transactions-screen-title">
         <h3>Transactions</h3>
         <TextField
           onChange={onFilterChange}
           value={filter}
           onKeyUp={onKeyUp}
-          floatingLabelText={"Filter"}
+          hintText={"Filter"}
         />
         <SelectField value={"Transactions"} onChange={onRedirect}>
           <MenuItem value={"Trade"} primaryText="Trade" />
           <MenuItem value={"Transactions"} primaryText="Transactions" />
           <MenuItem value={"Portfolio"} primaryText="Portofolio" />
         </SelectField>
-      </div>
+      </Paper>
       <Table selectable={false}>
         <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
           <TableRow>
@@ -87,7 +88,7 @@ const Transactions = props => {
           })}
         </TableBody>
       </Table>
-    </div>
+    </Paper>
   );
 };
 Transactions.propTypes = {

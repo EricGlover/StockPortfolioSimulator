@@ -24,12 +24,14 @@ class App extends Component {
   constructor() {
     super();
     this.defaults = {
-      startingDate: moment(`2016-01-01`)
+      startingDate: moment(`01 01 2016`).startOf("year"),
+      endingDate: moment(`01 01 2016`).endOf("year")
     };
+    console.log(this.defaults);
     this.state = {
       loaded: false,
       stockData: undefined,
-      currentDate: moment("2016-01-01"),
+      currentDate: moment(this.defaults.startingDate),
       currentStock: undefined,
       user: {
         cash: 1000
@@ -75,8 +77,6 @@ class App extends Component {
     this.handleRedirect(null, null, "Trade");
   };
   handleRedirect = (e, key, payload) => {
-    console.log("handling redirect");
-    console.log(payload);
     this.setState({ redirect: true, redirectTo: payload });
   };
 
@@ -110,8 +110,9 @@ class App extends Component {
                 {/********* RIGHT PANEL *********  */}
                 <div className="main-view-container">
                   <DateSlider
-                    date={this.state.currentDate}
                     startingDate={this.defaults.startingDate}
+                    currentDate={this.state.currentDate}
+                    endingDate={this.defaults.endingDate}
                     onDateChange={this.handleDateChange}
                   />
                   {/*********ROUTING*********  */}

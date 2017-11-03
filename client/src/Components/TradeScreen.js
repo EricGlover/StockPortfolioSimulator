@@ -4,6 +4,7 @@ import RaisedButton from "material-ui/RaisedButton";
 import SelectField from "material-ui/SelectField";
 import MenuItem from "material-ui/MenuItem";
 import TextField from "material-ui/TextField";
+import Paper from "material-ui/Paper";
 import Toggle from "material-ui/Toggle";
 
 import { decimalFloor } from "../util/math";
@@ -28,7 +29,7 @@ const TradeScreen = ({
   onSale
 }) => {
   return (
-    <div>
+    <Paper>
       <div className="trade-screen-title">
         <h3>Trade</h3>
         <SelectField value={"Trade"} onChange={onRedirect}>
@@ -84,7 +85,7 @@ const TradeScreen = ({
         className="trade-screen-cta"
         label="Place Order!"
       />
-    </div>
+    </Paper>
   );
 };
 

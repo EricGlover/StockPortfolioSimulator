@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import moment from "moment";
+
+import Paper from "material-ui/Paper";
 import Slider from "material-ui/Slider";
 
 //TODO: consider refactoring the slider to Unix epoch instead of ints
@@ -9,9 +11,12 @@ class DateSlider extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      startingDate: this.props.startingDate,
-      date: moment(this.props.startingDate)
+      startingDate: props.startingDate,
+      date: moment(props.currentDate),
+      defaultValue: moment(props.currentDate).dayOfYear() - 1,
+      max: props.endingDate.dayOfYear() - 1
     };
+    console.log(this.state);
     // performance test
     // let counter = 0;
     // let stateChanges = 0;
@@ -26,6 +31,7 @@ class DateSlider extends Component {
     // };
   }
   onChange = (e, value) => {
+    console.log(`slider ${value}, `);
     let newDate = moment(this.state.startingDate).add(value, "days");
     this.props.onDateChange(newDate);
   };
@@ -33,12 +39,16 @@ class DateSlider extends Component {
   render = () => {
     return (
       <div>
-        <p id="dateDisplay">{this.props.date.format("MMM-D-YY")}</p>
+        <div className="date-display">
+          <p id="starting-date">{this.props.startingDate.format("MMM-D-YY")}</p>
+          <p id="current-date">{this.props.currentDate.format("MMM-D-YY")}</p>
+          <p id="ending-date">{this.props.endingDate.format("MMM-D-YY")}</p>
+        </div>
         <Slider
-          defaultValue={1}
+          defaultValue={this.state.defaultValue}
           onChange={this.onChange}
-          min={1}
-          max={365}
+          min={0}
+          max={this.state.max}
           step={1}
         />
       </div>

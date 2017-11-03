@@ -2,6 +2,22 @@
   text-align: center;
 }
 
+.date-display {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+.date-display p {
+  margin: 0px;
+  padding: 0.5rem;
+  font-size: 0.6rem;
+}
+.date-display #current-date {
+  font-size: 1.3rem;
+  align-self: flex-start;
+}
+
 /* NAVBAR */
 .navbar {
   display: flex;

@@ -3,6 +3,8 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+/* part of my crazy fix for the material-ui tables */
 td {
   padding-left: 0px !important;
   padding-right: 0px !important;

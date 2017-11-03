@@ -28,8 +28,6 @@ let checkIcon = (title, sortBy) => {
 
 export const Stock = ({ stocks, ...props }) => {
   let stocksDisplay;
-  console.log("stock props");
-  console.log(props);
   /*STOCK DISPLAY IS THE TABLE BODY */
   if (stocks) {
     stocksDisplay = stocks.map(stock => {
@@ -87,15 +85,6 @@ export const Stock = ({ stocks, ...props }) => {
               };
               return (
                 <TableHeaderColumn style={thStyle} key={title}>
-                  {/* <div
-                    style={{
-                      width: "100%",
-                      display: "flex",
-                      flexDirection: "row",
-                      alignItems: "center",
-                      justifyContent: "center"
-                    }}
-                  > */}
                   <SortButton
                     label={title}
                     labelStyle={{ fontSize: "12px" }}
@@ -103,7 +92,6 @@ export const Stock = ({ stocks, ...props }) => {
                     icon={checkIcon(title, props.sortBy)}
                     onClick={e => props.onSortSelection(e, title)}
                   />
-                  {/* </div> */}
                 </TableHeaderColumn>
               );
             })}
