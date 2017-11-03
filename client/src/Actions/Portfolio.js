@@ -24,7 +24,7 @@ export const releaseStock = (price, quantity, ticker) => {
       ticker,
       price,
       quantity,
-      cost: price * quantity
+      cost: price * quantity * -1
     }
   };
 };

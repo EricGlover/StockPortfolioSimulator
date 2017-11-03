@@ -66,6 +66,13 @@ class App extends Component {
     this.setState((prevState, props) => {
       return { currentStock: btn.getAttribute("data-stock-ticker") };
     });
+    this.handleRedirect(null, null, "Trade");
+  };
+  handleSelectStockAlt = ticker => {
+    this.setState((prevState, props) => {
+      return { currentStock: ticker };
+    });
+    this.handleRedirect(null, null, "Trade");
   };
   handleRedirect = (e, key, payload) => {
     console.log("handling redirect");
@@ -135,24 +142,17 @@ class App extends Component {
                       render={() => {
                         return this.state.loaded ? (
                           <PortfolioContainer
+                            currentDaysStocks={currentDaysStocks}
                             onRedirect={this.handleRedirect}
+                            currentDate={this.state.currentDate}
+                            onTrade={this.handleSelectStockAlt}
                           />
                         ) : null;
                       }}
                     />
                     <Route
                       path="/"
-                      render={() => {
-                        return this.state.loaded ? (
-                          <TradeContainer
-                            onRedirect={this.handleRedirect}
-                            currentDate={this.state.currentDate}
-                            price={this.pricePicker()}
-                            onChangeQuantity={this.handleQuantityChange}
-                            currentStock={this.state.currentStock}
-                          />
-                        ) : null;
-                      }}
+                      component={() => <Redirect push to="/portfolio" />}
                     />
                   </Switch>
                 </div>

@@ -116,8 +116,6 @@ class TransactionsContainer extends React.Component {
 }
 
 const mapStateToProps = state => {
-  console.log("redux store = ");
-  console.log(state);
   return {
     transactions: state.transactions
   };

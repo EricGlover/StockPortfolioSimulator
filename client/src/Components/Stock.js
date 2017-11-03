@@ -100,6 +100,7 @@ export const Stock = ({ stocks, ...props }) => {
                 <TableHeaderColumn key={title}>
                   <FlatButton
                     label={title}
+                    labelStyle={{ fontSize: "10px" }}
                     style={sortButtonStyle}
                     onClick={e => {
                       props.onSortSelection(e, title);
