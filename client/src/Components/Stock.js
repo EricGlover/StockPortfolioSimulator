@@ -46,7 +46,7 @@ export const Stock = ({ stocks, ...props }) => {
           <TableRowColumn>
             <StockChange change={stock["30d"]} />
           </TableRowColumn>
-          <TableRowColumn>
+          <TableRowColumn style={{ paddingLeft: "0px", paddingRight: "0px" }}>
             <RaisedButton
               label="Trade"
               secondary
@@ -81,11 +81,21 @@ export const Stock = ({ stocks, ...props }) => {
           </TableRow>
           <TableRow>
             {props.columns.map(title => {
+              const thStyle = {
+                paddingLeft: "0px",
+                paddingRight: "0px"
+              };
               return (
-                <TableHeaderColumn
-                  style={{ paddingLeft: "0px", paddingRight: "0px" }}
-                  key={title}
-                >
+                <TableHeaderColumn style={thStyle} key={title}>
+                  {/* <div
+                    style={{
+                      width: "100%",
+                      display: "flex",
+                      flexDirection: "row",
+                      alignItems: "center",
+                      justifyContent: "center"
+                    }}
+                  > */}
                   <SortButton
                     label={title}
                     labelStyle={{ fontSize: "12px" }}
@@ -93,6 +103,7 @@ export const Stock = ({ stocks, ...props }) => {
                     icon={checkIcon(title, props.sortBy)}
                     onClick={e => props.onSortSelection(e, title)}
                   />
+                  {/* </div> */}
                 </TableHeaderColumn>
               );
             })}

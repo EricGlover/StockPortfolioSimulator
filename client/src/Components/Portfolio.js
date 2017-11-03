@@ -41,8 +41,11 @@ const Portfolio = props => {
             <TableRow>
               {props.statsTableColumns.map(title => {
                 return (
-                  <TableHeaderColumn key={title}>
-                    <FlatButton
+                  <TableHeaderColumn
+                    style={{ paddingLeft: "0px", paddingRight: "0px" }}
+                    key={title}
+                  >
+                    <SortButton
                       label={title}
                       labelStyle={{ fontSize: "12px" }}
                     />
@@ -88,7 +91,7 @@ const Portfolio = props => {
                   >
                     <SortButton
                       label={title}
-                      labelStyle={{ fontSize: "8px" }}
+                      labelStyle={{ fontSize: "10px" }}
                       onClick={e => {
                         props.onSortSelection(e, title);
                       }}
@@ -119,7 +122,9 @@ const Portfolio = props => {
                   <TableRowColumn>{stock["1d"]}</TableRowColumn>
                   <TableRowColumn>{stock["7d"]}</TableRowColumn>
                   <TableRowColumn>{stock["30d"]}</TableRowColumn>
-                  <TableRowColumn>
+                  <TableRowColumn
+                    style={{ paddingLeft: "0px", paddingRight: "0px" }}
+                  >
                     <RaisedButton
                       label="Trade"
                       secondary

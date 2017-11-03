@@ -2,7 +2,7 @@ import React from "react";
 import FlatButton from "material-ui/FlatButton";
 import { TableHeaderColumn } from "material-ui/Table";
 const sortButtonStyle = {
-  // minWidth: "none"
+  minWidth: "none"
   // width: "100%",
   // height: "100%"
   // textAlign: "left",
@@ -42,17 +42,27 @@ const SortButton = props => {
     }
   }
   return (
-    <FlatButton
-      labelPosition="before"
-      {...props}
-      icon={null} //don't feed FlatButton our icon prop
-      ascending={null}
-      labelStyle={labelStyle}
-      style={style}
+    <div
+      style={{
+        width: "100%",
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "center"
+      }}
     >
-      {props.icon ? icon : null}
-      {props.children}
-    </FlatButton>
+      <FlatButton
+        labelPosition="before"
+        {...props}
+        icon={null} //don't feed FlatButton our icon prop
+        ascending={null}
+        labelStyle={labelStyle}
+        style={style}
+      >
+        {props.icon ? icon : null}
+        {props.children}
+      </FlatButton>
+    </div>
   );
 };
 
