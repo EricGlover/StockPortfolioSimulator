@@ -14,9 +14,9 @@ const API_KEY = process.env.API_KEY;
 const endpoint = "https://www.quandl.com/api/v3/datatables/WIKI/PRICES";
 
 //one day for test porpoises
-// const queryParams = `?ticker=${Object.keys(companies).join(
-//   ","
-// )}&date=2017-10-02&api_key=${API_KEY}`;
+const queryParams = `?ticker=${Object.keys(companies).join(
+  ","
+)}&date.gte=2016-01-01&date.lte=2016-12-31&api_key=${API_KEY}`;
 
 //TODO: clean this
 router.get("/", (req, res) => {
@@ -32,11 +32,11 @@ router.get("/prices", async (req, res) => {
   // console.log("sending query to ", endpoint + queryParams);
 
   //check if the data is cached
-  if (isQuandlCached()) {
-    let data = retrieveCache();
-    let formated = formatPrices(data.datatable.data);
-    return res.json(formated);
-  }
+  // if (isQuandlCached()) {
+  //   let data = retrieveCache();
+  //   let formated = formatPrices(data.datatable.data);
+  //   return res.json(formated);
+  // }
   let serverResponse;
   try {
     //promisify this later
@@ -56,11 +56,11 @@ router.get("/prices", async (req, res) => {
         return res.sendStatus(50);
       }
       //cache the data
-      if (!isQuandlCached()) {
-        console.log("caching data ");
-        console.log(`formated = ${formated}`);
-        cacheQuandl(formated);
-      }
+      // if (!isQuandlCached()) {
+      //   console.log("caching data ");
+      //   console.log(`formated = ${formated}`);
+      //   cacheQuandl(formated);
+      // }
       res.json(formated);
     });
   } catch (e) {
