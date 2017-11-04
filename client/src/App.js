@@ -24,8 +24,18 @@ class App extends Component {
   constructor() {
     super();
     this.defaults = {
-      startingDate: moment(`2016-01-01`).startOf("year"),
-      endingDate: moment(`2016-01-01`).endOf("year")
+      startingDate: moment(`2016-01-01`)
+        .startOf("year")
+        .hour(0)
+        .minute(0)
+        .second(0)
+        .millisecond(0),
+      endingDate: moment(`2016-12-31`)
+        .endOf("year")
+        .hour(0)
+        .minute(0)
+        .second(0)
+        .millisecond(0)
     };
     this.state = {
       loaded: false,
