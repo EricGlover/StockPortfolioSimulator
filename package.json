@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
+    "debug": "node debug ./bin/www",
     "nodemon": "nodemon ./bin/www",
     "deploy": "cd client npm run build && cd .. && git push heroku master"
   },

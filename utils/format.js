@@ -6,13 +6,13 @@ const _ = require("lodash");
 const companies = require("../companyNames");
 // let startDate = moment(`01 01 2016`);
 // let endDate = moment(`12 31 2016`);
-let startDate = moment(`2016-01-01`)
+let startDate = moment("2016-01-01")
   .startOf("year")
   .hour(0)
   .minute(0)
   .second(0)
   .millisecond(0);
-let endDate = moment(`2016-12-31`)
+let endDate = moment("2016-12-31")
   .endOf("year")
   .hour(0)
   .minute(0)
@@ -250,4 +250,8 @@ const formatPrices = data => {
   return formatedData;
 };
 
-module.exports = formatPrices;
+module.exports = {
+  formatPrices,
+  startDate,
+  endDate
+};

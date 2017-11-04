@@ -9,7 +9,7 @@ import {
 import { Provider } from "react-redux";
 import store from "./Store/store";
 
-import DateSlider from "./Components/Elements/slider";
+import DateSlider from "./Components/Elements/DateSlider";
 import StockContainer from "./Containers/StockContainer";
 import TradeContainer from "./Containers/TradeContainer";
 import TransactionsContainer from "./Containers/TransactionsContainer";
@@ -23,24 +23,24 @@ import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 class App extends Component {
   constructor() {
     super();
-    this.defaults = {
-      startingDate: moment(`2016-01-01`)
-        .startOf("year")
-        .hour(0)
-        .minute(0)
-        .second(0)
-        .millisecond(0),
-      endingDate: moment(`2016-12-31`)
-        .endOf("year")
-        .hour(0)
-        .minute(0)
-        .second(0)
-        .millisecond(0)
-    };
+    // this.defaults = {
+    //   startingDate: moment("2016-01-01")
+    //     .startOf("year")
+    //     .hour(0)
+    //     .minute(0)
+    //     .second(0)
+    //     .millisecond(0),
+    //   endingDate: moment("2016-12-31")
+    //     .endOf("year")
+    //     .hour(0)
+    //     .minute(0)
+    //     .second(0)
+    //     .millisecond(0)
+    // };
     this.state = {
       loaded: false,
       stockData: undefined,
-      currentDate: moment(this.defaults.startingDate),
+      currentDate: undefined,
       currentStock: undefined,
       user: {
         cash: 1000
@@ -62,16 +62,23 @@ class App extends Component {
       //TODO: HANDLE ERROR
       console.error(e);
     }
-    const stockData = await serverResponse.json();
+    const serverData = await serverResponse.json();
+    let { startDate, endDate, stockData } = serverData;
+    startDate = moment(startDate);
+    endDate = moment(endDate);
     const firstDaysPrices = stockData[Object.keys(stockData)[0]];
     const currentStock = Object.keys(firstDaysPrices)[0];
-    console.log(stockData);
-    console.log(this.state);
-    this.setState({ stockData, currentStock, loaded: true });
+    this.setState({
+      stockData,
+      startDate,
+      currentDate: startDate,
+      endDate,
+      currentStock,
+      loaded: true
+    });
   };
   pricePicker = () => {
     const { stockData, currentDate, currentStock } = this.state;
-    // console.log(stockData, currentDate, currentStock);
     return stockData[currentDate.valueOf()][currentStock].close;
   };
   handleDateChange = newDate => {
@@ -126,15 +133,19 @@ class App extends Component {
                 <StockContainer
                   stocks={currentDaysStocks}
                   onTrade={this.handleSelectStock}
+                  loaded={this.state.loaded}
                 />
                 {/********* RIGHT PANEL *********  */}
                 <div className="main-view-container">
-                  <DateSlider
-                    startingDate={this.defaults.startingDate}
-                    currentDate={this.state.currentDate}
-                    endingDate={this.defaults.endingDate}
-                    onDateChange={this.handleDateChange}
-                  />
+                  {this.state.loaded ? (
+                    <DateSlider
+                      startingDate={this.state.startDate}
+                      loaded={this.state.loaded}
+                      currentDate={this.state.currentDate}
+                      endingDate={this.state.endDate}
+                      onDateChange={this.handleDateChange}
+                    />
+                  ) : null}
                   {/*********ROUTING*********  */}
                   <Switch>
                     <Route

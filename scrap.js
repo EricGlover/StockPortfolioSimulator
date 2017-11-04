@@ -20,13 +20,17 @@
 // }
 
 const moment = require("moment");
+var a = moment("2016-01-01").startOf("year");
+var u = moment.utc("2016-01-01").startOf("year");
+console.log(a.valueOf() === u.valueOf());
+// var b = moment(`2016-01-01`).endOf("year")
 // moment("aapl");
-try {
-  console.log(moment("aapl").isValid());
-} catch (e) {
-  console.log("eerorr");
-} finally {
-}
+// try {
+//   console.log(moment("aapl").isValid());
+// } catch (e) {
+//   console.log("eerorr");
+// } finally {
+// }
 // console.log("things");
 // var query = {
 //   owner: "defunkt",

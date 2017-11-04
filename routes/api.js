@@ -8,7 +8,7 @@ const {
   cacheQuandl,
   retrieveCache
 } = require("../utils/cache");
-const formatPrices = require("../utils/format");
+const { formatPrices, startDate, endDate } = require("../utils/format");
 const companies = require("../companyNames");
 const API_KEY = process.env.API_KEY;
 const endpoint = "https://www.quandl.com/api/v3/datatables/WIKI/PRICES";
@@ -61,7 +61,11 @@ router.get("/prices", async (req, res) => {
       //   console.log(`formated = ${formated}`);
       //   cacheQuandl(formated);
       // }
-      res.json(formated);
+      res.json({
+        startDate: startDate.valueOf(),
+        endDate: endDate.valueOf(),
+        stockData: formated
+      });
     });
   } catch (e) {
     console.error(e);

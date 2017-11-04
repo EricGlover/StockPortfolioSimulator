@@ -10,6 +10,8 @@ import Slider from "material-ui/Slider";
 class DateSlider extends Component {
   constructor(props) {
     super(props);
+    console.log("constructing DateSlider");
+    console.log(props);
     this.state = {
       startingDate: props.startingDate,
       date: moment(props.currentDate),
@@ -37,6 +39,7 @@ class DateSlider extends Component {
   };
 
   render = () => {
+    if (!this.props.loaded) return null;
     return (
       <div>
         <div className="date-display">

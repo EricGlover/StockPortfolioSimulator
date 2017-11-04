@@ -65,6 +65,7 @@ class StockContainer extends React.Component {
   };
   //filter first then apply the sorting
   render() {
+    if (!this.props.loaded) return null;
     let stocks;
     if (!this.props.stocks) {
       return <div>Loading...</div>;
