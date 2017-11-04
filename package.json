@@ -1,5 +1,5 @@
 {
-  "name": "server",
+  "name": "stock-portfolio-sim",
   "version": "0.0.0",
   "private": true,
   "scripts": {
@@ -21,5 +21,8 @@
   },
   "devDependencies": {
     "nodemon": "^1.12.1"
+  },
+  "engines": {
+    "node": "8.4.0"
   }
 }
