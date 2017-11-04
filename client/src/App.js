@@ -99,7 +99,7 @@ class App extends Component {
     let currentDaysStocks = this.state.stockData
       ? this.state.stockData[this.state.currentDate.valueOf()]
       : null;
-    console.log(`loaded = ${loaded}`);
+    console.log(`loaded = ${this.state.loaded}`);
     console.log(`app state`);
     console.log(this.state);
     return (
