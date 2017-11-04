@@ -27,7 +27,6 @@ class App extends Component {
       startingDate: moment(`01 01 2016`).startOf("year"),
       endingDate: moment(`01 01 2016`).endOf("year")
     };
-    console.log(this.defaults);
     this.state = {
       loaded: false,
       stockData: undefined,
@@ -43,10 +42,16 @@ class App extends Component {
 
   componentDidMount = async () => {
     let h = new Headers();
-    let serverResponse = await fetch("/api/prices", {
-      headers: h,
-      method: "GET"
-    });
+    let serverResponse;
+    try {
+      serverResponse = await fetch("/api/prices", {
+        headers: h,
+        method: "GET"
+      });
+    } catch (e) {
+      //TODO: HANDLE ERROR
+      console.error(e);
+    }
     const stockData = await serverResponse.json();
     const firstDaysPrices = stockData[Object.keys(stockData)[0]];
     const currentStock = Object.keys(firstDaysPrices)[0];
@@ -92,6 +97,9 @@ class App extends Component {
     let currentDaysStocks = this.state.stockData
       ? this.state.stockData[this.state.currentDate.valueOf()]
       : null;
+    console.log(`loaded = ${loaded}`);
+    console.log(`app state`);
+    console.log(this.state);
     return (
       <Provider store={store}>
         <MuiThemeProvider>
