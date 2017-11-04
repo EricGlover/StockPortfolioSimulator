@@ -26,14 +26,14 @@ app.use(cookieParser());
 //heroku build path
 
 // app.use("/users", users);
+app.use(express.static(path.join(__dirname, "/client/build")));
 app.use("/api", apiRouter);
 /* serve the bundle */
-app.get("/", function(req, res, next) {
+app.get("*", function(req, res, next) {
   // res.end("../client/build/index.html");
   console.log("serving bundle");
   res.sendFile(path.join(__dirname, "/client/build", "index.html"));
 });
-app.use(express.static(path.join(__dirname, "/client/build")));
 
 // app.use("*", index);
 

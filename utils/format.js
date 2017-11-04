@@ -59,8 +59,6 @@ const nearestPostDatePrice = (
   lastDate = endDate,
   company
 ) => {
-  console.log(`looking for ${missingDay}`);
-
   let day = missingDay.clone();
   while (!data[day.valueOf()]) {
     if (data[day.valueOf()] && !data[day.valueOf()][company]) {
@@ -68,11 +66,9 @@ const nearestPostDatePrice = (
     }
     day.add(1, "day");
     if (day.isAfter(lastDate)) {
-      console.log(`postDate returns false`);
       return false;
     }
   }
-  console.log(`postdate returns ${day}`);
   return day;
 };
 /*      end       DATE FINDER UTILITY FUNCTIONS */
@@ -90,7 +86,6 @@ const fillMissingDates = priceData => {
         if (!fillDate) throw new Error("couldn't find an appropriate date");
       }
       //clone the data from fill date
-
       priceData[day.valueOf()] = _.cloneDeep(priceData[fillDate.valueOf()]);
     }
     //walk backwards
@@ -178,27 +173,8 @@ const extractCloseDates = data => {
   return formatedData;
 };
 
-//helper functions for formatData
-// const get1Day = (prices, ticker, date) => {
-//   if (!moment.isMoment(date)) throw new Error("date must be moment");
-//   let currentDate = date.clone();
-//   currentDate.subtract(1, "day");
-//   if (currentDate.isBefore(startDate)) {
-//     currentDate = date.clone();
-//   } else if (!prices[currentDate.valueOf()]) {
-//     //couldn't find that date
-//     //this shouldn't run
-//     // console.log("couldnt find date");
-//     // console.log(`currentDate = ${currentDate}`);
-//     currentDate = nearestPostDatePrice(prices, currentDate, date, ticker);
-//     if (!currentDate) throw new Error("formatting problems");
-//   }
-//   //find the difference between the prices
-//   let datePrice = prices[date.valueOf()][ticker].close;
-//   let currentDatePrice = prices[currentDate.valueOf()][ticker].close;
-//   let difference = datePrice - currentDatePrice;
-//   return Math.trunc(difference);
-// };
+//helper functions
+
 const getXDaysBack = (prices, ticker, date, x) => {
   if (!moment.isMoment(date)) throw new Error("date must be moment");
   let currentDate = date.clone();
@@ -227,12 +203,8 @@ const formatData = data => {
   //at this point all the close prices should be included for
   //every ticker and there's no missing dates so the order
   //in which we fill out the data doesn't matter
-  // console.log(util.inspect(data));
   Object.keys(data).forEach(date => {
-    // console.log(util.inspect(date));
-    // console.log(util.inspect(data[date]));
     Object.keys(data[date]).forEach(ticker => {
-      // console.log(`moment = ${moment(Number(date))}`);
       let close = data[date][ticker].close;
       let oneDay;
       let sevenDay;
@@ -244,8 +216,6 @@ const formatData = data => {
       } catch (e) {
         console.error(e);
       }
-
-      // console.log(`oneDay = ${oneDay}`);
       data[date][ticker] = {
         close: close,
         "1d": oneDay,
@@ -261,7 +231,7 @@ const formatData = data => {
 const formatPrices = data => {
   //grab the close prices from the api data
   let closePrices = extractCloseDates(data);
-  console.log(util.inspect(closePrices));
+  // console.log(util.inspect(closePrices));
   //fill in the missing dates
   let allDates = fillMissingDates(closePrices);
   //format it in the way that the front-end expects
