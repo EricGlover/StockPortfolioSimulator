@@ -32,11 +32,11 @@ router.get("/prices", async (req, res) => {
   // console.log("sending query to ", endpoint + queryParams);
 
   //check if the data is cached
-  // if (isQuandlCached()) {
-  //   let data = retrieveCache();
-  //   let formated = formatPrices(data.datatable.data);
-  //   return res.json(formated);
-  // }
+  if (isQuandlCached()) {
+    let data = retrieveCache();
+    let formated = formatPrices(data.datatable.data);
+    return res.json(formated);
+  }
   let serverResponse;
   try {
     //promisify this later
@@ -56,11 +56,11 @@ router.get("/prices", async (req, res) => {
         return res.sendStatus(50);
       }
       //cache the data
-      // if (!isQuandlCached()) {
-      //   console.log("caching data ");
-      //   console.log(`formated = ${formated}`);
-      //   cacheQuandl(formated);
-      // }
+      if (!isQuandlCached()) {
+        console.log("caching data ");
+        console.log(`formated = ${formated}`);
+        cacheQuandl(formated);
+      }
       res.json(formated);
     });
   } catch (e) {
