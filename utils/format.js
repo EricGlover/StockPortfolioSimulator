@@ -4,6 +4,8 @@ const util = require("util");
 const _ = require("lodash");
 
 const companies = require("../companyNames");
+// let startDate = moment(`01 01 2016`);
+// let endDate = moment(`12 31 2016`);
 let startDate = moment(`2016-01-01`);
 let endDate = moment(`2016-12-31`);
 let momentToQuandl = "YYYY-MM-DD";
