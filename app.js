@@ -27,9 +27,15 @@ app.use(cookieParser());
 
 // app.use("/users", users);
 app.use("/api", apiRouter);
-// app.use("/", index);
-// app.use("*", index);
+/* serve the bundle */
+router.get("/", function(req, res, next) {
+  // res.end("../client/build/index.html");
+  console.log("serving bundle");
+  res.sendFile(path.join(__dirname, "../client/build", "index.html"));
+});
 app.use(express.static(path.join(__dirname, "./client/build/static")));
+
+// app.use("*", index);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
