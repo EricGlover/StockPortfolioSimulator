@@ -55,6 +55,8 @@ class App extends Component {
     const stockData = await serverResponse.json();
     const firstDaysPrices = stockData[Object.keys(stockData)[0]];
     const currentStock = Object.keys(firstDaysPrices)[0];
+    console.log(stockData);
+    console.log(this.state);
     this.setState({ stockData, currentStock, loaded: true });
   };
   pricePicker = () => {
