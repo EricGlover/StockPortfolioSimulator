@@ -64,8 +64,8 @@ class App extends Component {
     }
     const serverData = await serverResponse.json();
     let { startDate, endDate, stockData } = serverData;
-    startDate = moment(startDate);
-    endDate = moment(endDate);
+    startDate = moment.utc(startDate);
+    endDate = moment.utc(endDate);
     const firstDaysPrices = stockData[Object.keys(stockData)[0]];
     const currentStock = Object.keys(firstDaysPrices)[0];
     this.setState({

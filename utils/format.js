@@ -6,18 +6,20 @@ const _ = require("lodash");
 const companies = require("../companyNames");
 // let startDate = moment(`01 01 2016`);
 // let endDate = moment(`12 31 2016`);
-let startDate = moment("2016-01-01")
-  .startOf("year")
-  .hour(0)
-  .minute(0)
-  .second(0)
-  .millisecond(0);
-let endDate = moment("2016-12-31")
-  .endOf("year")
-  .hour(0)
-  .minute(0)
-  .second(0)
-  .millisecond(0);
+
+let startDate = moment.utc("2016-01-01");
+// .startOf("year")
+// .hour(0)
+// .minute(0)
+// .second(0)
+// .millisecond(0);
+let endDate = moment.utc("2016-12-31");
+debugger;
+// .endOf("year")
+// .hour(0)
+// .minute(0)
+// .second(0)
+// .millisecond(0);
 let momentToQuandl = "YYYY-MM-DD";
 const dataProto = {
   close: undefined,
@@ -169,7 +171,7 @@ const extractCloseDates = data => {
   //for each data entry init it's date in formatedData
   ////and place ticker: { close.... } under that date
   data.forEach(row => {
-    let date = moment(row[dateIdx]);
+    let date = moment.utc(row[dateIdx]);
     //if you let moment convert date to String it'll mess up trying to
     //convert the key to a date later, so we'll use `UNIX EPOCH`
     formatedData[date.valueOf()] = formatedData[date.valueOf()] || {};
@@ -221,9 +223,9 @@ const formatData = data => {
       let sevenDay;
       let thirtyDay;
       try {
-        oneDay = getXDaysBack(data, ticker, moment(Number(date)), 1);
-        sevenDay = getXDaysBack(data, ticker, moment(Number(date)), 7);
-        thirtyDay = getXDaysBack(data, ticker, moment(Number(date)), 30);
+        oneDay = getXDaysBack(data, ticker, moment.utc(Number(date)), 1);
+        sevenDay = getXDaysBack(data, ticker, moment.utc(Number(date)), 7);
+        thirtyDay = getXDaysBack(data, ticker, moment.utc(Number(date)), 30);
       } catch (e) {
         console.error(e);
       }
@@ -240,6 +242,7 @@ const formatData = data => {
 
 //transforms Quandl API call into usable data for the front-end
 const formatPrices = data => {
+  debugger;
   //grab the close prices from the api data
   let closePrices = extractCloseDates(data);
   // console.log(util.inspect(closePrices));

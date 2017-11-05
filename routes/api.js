@@ -30,13 +30,17 @@ router.get("/", (req, res) => {
 //TODO: ADD REDIS CACHEING
 router.get("/prices", async (req, res) => {
   // console.log("sending query to ", endpoint + queryParams);
-
+  let formated;
   //check if the data is cached
-  // if (isQuandlCached()) {
-  //   let data = retrieveCache();
-  //   let formated = formatPrices(data.datatable.data);
-  //   return res.json(formated);
-  // }
+  if (isQuandlCached()) {
+    let data = retrieveCache();
+    formated = formatPrices(data.datatable.data);
+    return res.json({
+      startDate: startDate.valueOf(),
+      endDate: endDate.valueOf(),
+      stockData: formated
+    });
+  }
   let serverResponse;
   try {
     //promisify this later
@@ -47,7 +51,7 @@ router.get("/prices", async (req, res) => {
     ) {
       if (error) throw error;
       let data = JSON.parse(body);
-      let formated;
+
       try {
         formated = formatPrices(data.datatable.data);
       } catch (e) {
