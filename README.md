@@ -6,5 +6,8 @@ A single-page web app where you can trade tech stocks from 2016 and build as imp
 ### Deployment
 https://stock-portfolio-sim.herokuapp.com/
 
+![the portfolio view of the app](http://www.ericglover.me//assets/images/projects/StockPortfolioSimulator/portfolioScreen.png "Stock tradin', wheelin' and dealin', a fiscally great time for everyone")
+
+
 ### Trello Board
 https://trello.com/b/HveltYeY/stock-portfolio-app
