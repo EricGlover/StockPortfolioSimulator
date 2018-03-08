@@ -49,7 +49,9 @@ export const Stock = ({ stocks, ...props }) => {
               label="Trade"
               secondary
               data-stock-ticker={stock.ticker}
-              onClick={props.onTrade}
+              onClick={() => {
+                props.onTrade(stock.ticker);
+              }}
             />
           </TableRowColumn>
         </TableRow>

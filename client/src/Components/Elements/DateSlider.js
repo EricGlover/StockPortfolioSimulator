@@ -10,15 +10,12 @@ import Slider from "material-ui/Slider";
 class DateSlider extends Component {
   constructor(props) {
     super(props);
-    console.log("constructing DateSlider");
-    console.log(props);
     this.state = {
       startingDate: props.startingDate,
       date: moment(props.currentDate),
       defaultValue: moment(props.currentDate).dayOfYear() - 1,
       max: props.endingDate.dayOfYear() - 1
     };
-    console.log(this.state);
     // performance test
     // let counter = 0;
     // let stateChanges = 0;

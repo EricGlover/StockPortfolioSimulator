@@ -1,5 +1,6 @@
 import { ACQUIRE_STOCK, RELEASE_STOCK } from "../Actions/Portfolio";
 import { decimalFloor } from "../util/math";
+
 export const portfolio = (state = {}, action) => {
   let ticker;
   let quantity;

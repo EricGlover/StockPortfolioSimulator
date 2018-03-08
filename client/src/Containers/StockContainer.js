@@ -1,4 +1,5 @@
 import React from "react";
+import Loader from "react-loader";
 import { Stock } from "../Components/Stock";
 
 class StockContainer extends React.Component {
@@ -65,10 +66,10 @@ class StockContainer extends React.Component {
   };
   //filter first then apply the sorting
   render() {
-    if (!this.props.loaded) return null;
-    let stocks;
+    // if (!this.props.loaded) return null;
+    let stocks = [];
     if (!this.props.stocks) {
-      return <div>Loading...</div>;
+      // return <div>Loading...</div>;
     } else {
       stocks = this.filterStocks(this.props.stocks, this.state.filter);
       stocks = this.sortStocks(
@@ -78,15 +79,17 @@ class StockContainer extends React.Component {
       );
     }
     return (
-      <Stock
-        {...this.state}
-        {...this.props}
-        columns={this.columns}
-        onKeyUp={this.handleKeyUp}
-        onFilterChange={this.handleFilter}
-        onSortSelection={this.handleSortSelection}
-        stocks={stocks}
-      />
+      <Loader loaded={this.props.loaded}>
+        <Stock
+          {...this.state}
+          {...this.props}
+          columns={this.columns}
+          onKeyUp={this.handleKeyUp}
+          onFilterChange={this.handleFilter}
+          onSortSelection={this.handleSortSelection}
+          stocks={stocks}
+        />
+      </Loader>
     );
   }
 }

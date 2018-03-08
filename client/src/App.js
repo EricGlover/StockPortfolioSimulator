@@ -84,27 +84,20 @@ class App extends Component {
   handleDateChange = newDate => {
     this.setState({ currentDate: moment(newDate) });
   };
-  handleSelectStock = e => {
-    //get the button
-    //also I have to query the DOM here, worth?? at least I don't have to curry...
-    //.closest isn't supported in IE so....sorry IE
-    let btn = e.target.closest("button");
-    this.setState((prevState, props) => {
-      return { currentStock: btn.getAttribute("data-stock-ticker") };
-    });
-    this.handleRedirect(null, null, "Trade");
-  };
-  handleSelectStockAlt = ticker => {
+
+  handleSelectStock = ticker => {
     this.setState((prevState, props) => {
       return { currentStock: ticker };
     });
     this.handleRedirect(null, null, "Trade");
   };
+
   handleRedirect = (e, key, payload) => {
     this.setState({ redirect: true, redirectTo: payload });
   };
 
   render() {
+    //redirect
     if (this.state.redirect) {
       this.setState({ redirect: false, redirectTo: undefined });
       return (
@@ -116,9 +109,6 @@ class App extends Component {
     let currentDaysStocks = this.state.stockData
       ? this.state.stockData[this.state.currentDate.valueOf()]
       : null;
-    console.log(`loaded = ${this.state.loaded}`);
-    console.log(`app state`);
-    console.log(this.state);
     return (
       <Provider store={store}>
         <MuiThemeProvider>
@@ -180,7 +170,7 @@ class App extends Component {
                             currentDaysStocks={currentDaysStocks}
                             onRedirect={this.handleRedirect}
                             currentDate={this.state.currentDate}
-                            onTrade={this.handleSelectStockAlt}
+                            onTrade={this.handleSelectStock}
                           />
                         ) : null;
                       }}
